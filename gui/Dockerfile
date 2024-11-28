@@ -1,8 +1,14 @@
 FROM app/app_api AS api
 RUN mkdir /app/api/files /app/api/static
+
+# Копируем app_lib в контейнер
+COPY ./lib /app/lib
+ENV PYTHONPATH="/app/lib:${PYTHONPATH}"
+
+# Собираем статику
 RUN python3 manage.py collectstatic --noinput
 
-FROM node:16-alpine AS gui
+FROM node:18-alpine AS gui
 RUN mkdir /temp
 WORKDIR /temp
 COPY ./package.json /temp/package.json

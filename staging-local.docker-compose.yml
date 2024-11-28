@@ -1,11 +1,11 @@
-version: "3.8"
+#version: "3.8"
 
 services:
   app_base:
     build:
       context: ./lib
       dockerfile: ./Dockerfile
-    image: app/app_base
+    #image: app/app_base
 
     container_name: app_base
 
@@ -61,6 +61,8 @@ services:
       dockerfile: ./Dockerfile
     image: app/app_api
     container_name: app_api
+    volumes:
+      - ./lib:/app/lib
 
     command: bash -c "python3 main.py"
     restart: on-failure
